@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up / Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Container for the forms -->
+    <div class="form-container">
+        
+        <!-- Sign Up Form -->
+        <form id="signup-form" class="form">
+            <h2>Create Account</h2>
+
+            <!-- Full Name Input -->
+            <div class="input-group">
+                <label for="signup-name">Full Name</label>
+                <input type="text" id="signup-name" placeholder="Enter your full name" required>
+            </div>
+
+            <!-- Email Input -->
+            <div class="input-group">
+                <label for="signup-email">Email Address</label>
+                <input type="email" id="signup-email" placeholder="Enter your email" required>
+            </div>
+
+            <!-- Password Input -->
+            <div class="input-group">
+                <label for="signup-password">Password</label>
+                <input type="password" id="signup-password" placeholder="Enter your password" required>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="button" onclick="signUp()">Sign Up</button>
+
+            <!-- Link to Login -->
+            <p>Already have an account? <a href="javascript:void(0)" onclick="toggleForm()">Login here</a></p>
+        </form>
+
+        <!-- Login Form -->
+        <form id="login-form" class="form" style="display: none;">
+            <h2>Login</h2>
+
+            <!-- Email Input -->
+            <div class="input-group">
+                <label for="login-email">Email Address</label>
+                <input type="email" id="login-email" placeholder="Enter your email" required>
+            </div>
+
+            <!-- Password Input -->
+            <div class="input-group">
+                <label for="login-password">Password</label>
+                <input type="password" id="login-password" placeholder="Enter your password" required>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="button" onclick="login()">Login</button>
+
+            <!-- Link to Sign Up -->
+            <p>Don't have an account? <a href="javascript:void(0)" onclick="toggleForm()">Sign up here</a></p>
+        </form>
+    </div>
+
+    <script>
+        // Function to handle sign up
+        function signUp() {
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+
+            if (name && email && password) {
+                // Save user info to local storage
+                localStorage.setItem('user', JSON.stringify({ name, email, password }));
+                alert('Registration successful! Please log in.');
+                
+                // Switch to Login Form
+                toggleForm();
+            } else {
+                alert('Please fill in all fields.');
+            }
+        }
+
+        // Function to handle login
+        function login() {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+
+            if (storedUser && storedUser.email === email && storedUser.password === password) {
+                alert('Login successful! Welcome, ' + storedUser.name);
+            } else {
+                alert('Invalid email or password.');
+            }
+        }
+
+        // Toggle between Sign Up and Login forms
+        function toggleForm() {
+            const signupForm = document.getElementById('signup-form');
+            const loginForm = document.getElementById('login-form');
+            
+            if (signupForm.style.display === 'none') {
+                signupForm.style.display = 'block';
+                loginForm.style.display = 'none';
+            } else {
+                signupForm.style.display = 'none';
+                loginForm.style.display = 'block';
+            }
+        }
+    </script>
+
+</body>
+</html>
